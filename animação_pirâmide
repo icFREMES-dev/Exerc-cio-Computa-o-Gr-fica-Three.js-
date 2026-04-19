@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Mé da Ponto Lucas </title>
+  <style>
+    body { margin: 0; overflow: hidden; background: black; }
+  </style>
+</head>
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<script>
+
+// Cena
+const scene = new THREE.Scene();
+
+// câmera
+const camera = new THREE.PerspectiveCamera(
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  100
+);
+camera.position.z = 5;
+
+// renderizador 
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// triângulo (na real é uma pirâmide com base triangular)
+const geometry = new THREE.ConeGeometry(1, 2, 3);
+const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+const triangle = new THREE.Mesh(geometry, material);
+scene.add(triangle);
+
+
+
+// material 
+const faceMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+
+
+
+
+// animação 
+
+let scale = 1;
+let direction = 0.04;
+
+function animate() {
+  requestAnimationFrame(animate);
+  scale += direction;
+
+  if (scale > 1.5 || scale < 0.5) {
+    direction *= -1; // inverte o sentido
+  }
+
+  triangle.scale.set(scale, scale, scale);
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+</script>
+
+</body>
+</html>
